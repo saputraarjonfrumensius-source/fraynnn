@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - Portfolio Interactive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen font-sans transition-colors duration-300 flex flex-col justify-between items-center p-4 sm:p-6 md:p-8">
+
+    <!-- Background Decorative Gradients -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-blue-400/20 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- Top Action Bar -->
+    <header class="w-full max-w-4xl flex justify-between items-center mb-6">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="showDashboard()">
+            <div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                F
+            </div>
+            <div>
+                <span class="text-sm font-bold tracking-wide text-slate-800 dark:text-white block leading-none">Dashboard</span>
+                <span class="text-[10px] text-slate-500 dark:text-slate-400">Frayn Portfolio</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="showProfileView()" class="px-3.5 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 text-slate-700 dark:text-slate-200 text-xs font-medium transition-all">
+                <i class="fas fa-user mr-1"></i> Tentang Saya
+            </button>
+            <!-- Theme Toggle Button -->
+            <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2.5 rounded-full glass hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-all duration-200 shadow-sm" title="Ubah Tema">
+                <i class="fas fa-moon dark:hidden text-lg"></i>
+                <i class="fas fa-sun hidden dark:block text-lg text-amber-400"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION 1: DASHBOARD UTAMA (Tampilan Awal) -->
+    <section id="dashboardView" class="w-full max-w-4xl glass rounded-3xl shadow-2xl p-8 sm:p-12 text-center transition-all duration-300 my-auto">
+        <div class="max-w-2xl mx-auto space-y-6">
+            <div class="inline-block p-4 bg-brand-500/10 rounded-2xl text-brand-600 dark:text-brand-400 mb-2">
+                <i class="fas fa-laptop-code text-4xl"></i>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                Selamat Datang di <span class="text-brand-600 dark:text-brand-400">Dashboard</span>
+            </h1>
+            <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
+                Halo! Ini adalah ruang utama portofolio digital **Frumensius Saputra Arjon (Frayn)**. Silakan jelajahi informasi biodata, keahlian, dan karya seni yang telah saya buat.
+            </p>
+            <div class="pt-4 flex justify-center">
+                <button onclick="showProfileView()" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-base rounded-2xl shadow-xl shadow-brand-500/30 transition-all flex items-center gap-2 transform hover:-translate-y-0.5">
+                    <i class="fas fa-user-circle text-lg"></i> Tentang Saya
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: MENU BIODATA PROFIL (Disembunyikan di Awal) -->
+    <main id="profileView" class="w-full max-w-4xl glass rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 my-auto hidden">
+        <!-- Banner Top -->
+        <div class="h-36 sm:h-48 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative overflow-hidden">
+            <div class="absolute inset-0 bg-black/10"></div>
+            <button onclick="showDashboard()" class="absolute top-4 left-4 bg-black/30 hover:bg-black/50 text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-md transition-all flex items-center gap-1 z-10">
+                <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+            </button>
+        </div>
+
+        <!-- Profile Content Container -->
+        <div class="px-6 pb-8 pt-0 relative">
+            
+            <!-- Avatar & Top Actions Area -->
+            <div class="flex flex-col sm:flex-row items-center sm:items-end justify-between -mt-16 sm:-mt-20 mb-6 gap-4">
+                <div class="relative group">
+                    <!-- Foto Profil Avatar Lingkaran Utama -->
+                    <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-slate-900 shadow-xl overflow-hidden bg-slate-800 flex items-center justify-center relative group-hover:scale-105 transition-transform duration-300">
+                        <img id="displayAvatar" src="foto.jpeg"
+                             onerror="this.style.display='none'; document.getElementById('avatarFallback').classList.remove('hidden');"
+                             alt="Foto Profil Frumensius Saputra Arjon (Frayn)" 
+                             class="w-full h-full object-cover">
+                        <!-- Fallback jika file lokal belum diunggah ke web host -->
+                        <div id="avatarFallback" class="hidden w-full h-full bg-gradient-to-br from-blue-600 to-indigo-800 flex flex-col items-center justify-center text-white">
+                            <i class="fas fa-user-circle text-5xl mb-1"></i>
+                            <span class="text-xs font-bold tracking-widest uppercase">Frayn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap justify-center gap-3 w-full sm:w-auto">
+                    <button onclick="copyShareLink()" class="px-4 py-2.5 glass hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl transition-all text-sm flex items-center justify-center gap-2" title="Bagikan">
+                        <i class="fas fa-share-alt"></i> Bagikan Profil
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile Info Header -->
+            <div class="text-center sm:text-left mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <h1 id="displayName" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Frumensius Saputra Arjon</h1>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 w-max mx-auto sm:mx-0">
+                        <i class="fas fa-check-circle mr-1 text-blue-500"></i> Terverifikasi
+                    </span>
+                </div>
+                <p id="displayTitle" class="text-slate-500 dark:text-slate-400 font-medium text-sm mt-1">
+                    Mahasiswa Teknik Informatika • Nama Panggilan: <span class="text-brand-600 dark:text-brand-400 font-semibold">Frayn</span>
+                </p>
+                <p id="displayBio" class="text-slate-600 dark:text-slate-300 text-sm mt-3 max-w-2xl leading-relaxed">
+                    Anak pertama dari 3 bersaudara. Saat ini menempuh pendidikan Sarjana Teknik Informatika dan memiliki ketertarikan tinggi pada dunia seni dan melukis.
+                </p>
+                
+                <!-- Kotak Kontak Langsung ke WhatsApp -->
+                <div class="mt-4 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 dark:text-emerald-300 flex items-center justify-between flex-wrap gap-2 text-xs sm:text-sm">
+                    <div class="flex items-center gap-2.5">
+                        <i class="fab fa-whatsapp text-emerald-500 text-xl"></i>
+                        <span>Silakan hubungi saya bila ada pertanyaan seputaran coding: 
+                            <a href="https://wa.me/62895405376599" target="_blank" class="font-bold underline text-emerald-600 dark:text-emerald-400 hover:text-emerald-700">
+                                +62 895405376599
+                            </a>
+                        </span>
+                    </div>
+                    <a href="https://wa.me/62895405376599" target="_blank" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fab fa-whatsapp text-sm"></i> Chat Sekarang
+                    </a>
+                </div>
+            </div>
+
+            <!-- Detail Information Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800/80 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-blue-500/10 text-blue-600 rounded-xl">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 block">Asal Daerah</span>
+                        <span id="displayOrigin" class="font-semibold text-slate-700 dark:text-slate-200 text-xs sm:text-sm">NTT, Manggarai Barat</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-sky-500/10 text-sky-600 rounded-xl">
+                        <i class="fas fa-building-user"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 block">Tempat Tinggal</span>
+                        <span id="displayLiving" class="font-semibold text-slate-700 dark:text-slate-200 text-xs sm:text-sm">Yogyakarta</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-indigo-500/10 text-indigo-600 rounded-xl">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 block">Pendidikan</span>
+                        <span id="displayEducation" class="font-semibold text-slate-700 dark:text-slate-200 text-xs sm:text-sm">Universitas Sarjanawiyata Tamansiswa</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-purple-500/10 text-purple-600 rounded-xl">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 block">Hobi</span>
+                        <span id="displayHobbies" class="font-semibold text-slate-700 dark:text-slate-200 text-xs sm:text-sm">Melukis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Header -->
+            <div class="flex border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto">
+                <button onclick="switchTab('skills')" id="tab-skills" class="tab-btn px-4 py-3 font-semibold text-sm border-b-2 border-brand-600 text-brand-600 dark:text-brand-400 flex items-center gap-2 transition-all whitespace-nowrap">
+                    <i class="fas fa-code"></i> Keahlian
+                </button>
+                <button onclick="switchTab('projects')" id="tab-projects" class="tab-btn px-4 py-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center gap-2 transition-all whitespace-nowrap">
+                    <i class="fas fa-briefcase"></i> Portofolio
+                </button>
+                <button onclick="switchTab('socials')" id="tab-socials" class="tab-btn px-4 py-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center gap-2 transition-all whitespace-nowrap">
+                    <i class="fas fa-globe"></i> Kontak & Sosial
+                </button>
+                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn px-4 py-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center gap-2 transition-all whitespace-nowrap">
+                    <i class="fas fa-images"></i> Galeri
+                </button>
+            </div>
+
+            <!-- Tab Content Panels -->
+            <div>
+                <!-- Skills Tab -->
+                <div id="content-skills" class="tab-content space-y-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 flex items-center gap-3 hover:shadow-md transition-all">
+                            <i class="fab fa-html5 text-orange-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-xs sm:text-sm">HTML5 / CSS3</h4>
+                                <span class="text-[10px] text-slate-400">Lanjutan</span>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 flex items-center gap-3 hover:shadow-md transition-all">
+                            <i class="fab fa-js-square text-yellow-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-xs sm:text-sm">JavaScript</h4>
+                                <span class="text-[10px] text-slate-400">Menengah</span>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 flex items-center gap-3 hover:shadow-md transition-all">
+                            <i class="fab fa-react text-sky-400 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-xs sm:text-sm">React JS</h4>
+                                <span class="text-[10px] text-slate-400">Menengah</span>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 flex items-center gap-3 hover:shadow-md transition-all">
+                            <i class="fab fa-figma text-purple-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-xs sm:text-sm">UI/UX Design</h4>
+                                <span class="text-[10px] text-slate-400">Pemula</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Tab -->
+                <div id="content-projects" class="tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 hover:border-brand-500 transition-all">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-base">Galeri Lukisan & Karya Seni</h4>
+                                <span class="text-[10px] bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 px-2 py-0.5 rounded-full font-medium">Hobi & Seni</span>
+                            </div>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mb-3">Kumpulan hasil karya seni lukis dan sketsa visual oleh Frayn.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/30 hover:border-brand-500 transition-all">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-base">Project Teknik Informatika</h4>
+                                <span class="text-[10px] bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 px-2 py-0.5 rounded-full font-medium">Pengembangan</span>
+                            </div>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mb-3">Project pemrograman web dan aplikasi berbasis teknologi modern.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Socials Tab -->
+                <div id="content-socials" class="tab-content hidden">
+                    <div class="max-w-md mx-auto">
+                        <a href="https://www.tiktok.com/@sahaputr4" target="_blank" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:bg-black hover:text-white dark:hover:bg-slate-800 transition-all flex items-center justify-between shadow-sm group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center text-xl shadow-md">
+                                    <i class="fab fa-tiktok"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm group-hover:text-white">TikTok</h4>
+                                    <span class="text-xs text-slate-500 dark:text-slate-400 group-hover:text-slate-300 font-medium">@sahaputr4</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-external-link-alt text-xs text-slate-400 group-hover:text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div id="content-gallery" class="tab-content hidden">
+                    <div class="max-w-xl mx-auto">
+                        <div class="relative rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md">
+                            <img id="galleryMain" src="" alt="Foto galeri" class="w-full h-72 sm:h-96 object-contain">
+                            <span id="galleryCounter" class="absolute top-3 right-3 bg-black/60 text-white text-xs font-semibold px-2.5 py-1 rounded-full">1 / 19</span>
+                            <button onclick="galleryStep(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center" aria-label="Foto sebelumnya"><i class="fas fa-chevron-left"></i></button>
+                            <button onclick="galleryStep(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center" aria-label="Foto berikutnya"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <p class="text-center text-xs text-slate-500 dark:text-slate-400 mt-4 mb-2">Pilih nomor untuk melihat foto</p>
+                        <div id="galleryNumbers" class="flex flex-wrap justify-center gap-2"></div>
+                        <p id="galleryEmpty" class="hidden text-center text-sm text-slate-500 dark:text-slate-400 mt-4">Belum ada foto di galeri.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 text-center text-xs text-slate-500 dark:text-slate-500">
+        <p>© <span id="year"></span> Card Profil Interaktif. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- WIDGET LIVE CHAT ADMIN IN-APP -->
+    <div id="liveChatWidget" class="fixed bottom-4 right-4 z-50 w-80 sm:w-96 glass rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 hidden transition-all duration-300 overflow-hidden flex flex-col" style="height: 460px;">
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-3.5 text-white flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="relative">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs">
+                        F
+                    </div>
+                    <span class="w-2.5 h-2.5 bg-emerald-400 border-2 border-emerald-600 rounded-full absolute bottom-0 right-0"></span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs leading-tight">Admin Frayn (Coding Support)</h4>
+                    <span class="text-[10px] text-emerald-100 block">Online • Siap Membantu</span>
+                </div>
+            </div>
+            <button onclick="closeLiveChat()" class="text-white/80 hover:text-white p-1">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Chat Body / Messages Area -->
+        <div id="chatMessages" class="flex-1 p-3.5 overflow-y-auto space-y-3 text-xs custom-scrollbar bg-slate-50/50 dark:bg-slate-900/50">
+            <!-- Pesan Otomatis Pertama dari Admin -->
+            <div class="flex items-start gap-2">
+                <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                    F
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-2.5 rounded-2xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm max-w-[80%] text-slate-700 dark:text-slate-200">
+                    Halo! Saya Frayn. Ada pertanyaan seputaran coding, HTML, JS, atau tugas kuliah yang bisa saya bantu?
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Suggestions -->
+        <div class="p-2 border-t border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-slate-900/30 flex gap-1.5 overflow-x-auto text-[10px]">
+            <button onclick="sendQuickMessage('Halo Frayn, saya ingin tanya seputar coding!')" class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 rounded-full text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                💡 Tanya Coding
+            </button>
+            <button onclick="sendQuickMessage('Boleh minta kontak WhatsApp langsung?')" class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 rounded-full text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                📱 WA Langsung
+            </button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form onsubmit="handleSendMessage(event)" class="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+            <input type="text" id="chatInput" placeholder="Ketik pesan Anda di sini..." required class="flex-1 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border-none text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+            <button type="submit" class="w-8 h-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center text-xs shadow-md shrink-0">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm z-50">
+        <i id="toastIcon" class="fas fa-info-circle text-brand-500"></i>
+        <span id="toastMessage">Pesan Notifikasi</span>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Sunting Profil</h3>
+                <button onclick="toggleEditModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <form id="editForm" onsubmit="saveProfile(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">URL Foto Profil</label>
+                    <input type="url" id="inputAvatar" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Nama Lengkap</label>
+                    <input type="text" id="inputName" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Profesi / Peran</label>
+                    <input type="text" id="inputTitle" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Deskripsi Ringkas</label>
+                    <textarea id="inputBio" rows="2" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Kota Asal</label>
+                        <input type="text" id="inputOrigin" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Pendidikan</label>
+                        <input type="text" id="inputEducation" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Hobi</label>
+                    <input type="text" id="inputHobbies" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Email Kontak</label>
+                    <input type="email" id="inputEmail" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onclick="toggleEditModal()" class="px-4 py-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-medium text-sm shadow-md">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // Set dynamic year
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+        // Live Chat Functions
+        function openLiveChat() {
+            document.getElementById('liveChatWidget').classList.remove('hidden');
+            document.getElementById('chatInput').focus();
+        }
+
+        function closeLiveChat() {
+            document.getElementById('liveChatWidget').classList.add('hidden');
+        }
+
+        function sendQuickMessage(text) {
+            document.getElementById('chatInput').value = text;
+            handleSendMessage(new Event('submit'));
+        }
+
+        function handleSendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatContainer = document.getElementById('chatMessages');
+
+            // 1. Tambah Pesan Pengunjung (User)
+            const userMsgHtml = `
+                <div class="flex items-start justify-end gap-2">
+                    <div class="bg-emerald-600 text-white p-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[80%]">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+            `;
+            chatContainer.insertAdjacentHTML('beforeend', userMsgHtml);
+            input.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 2. Simulasi Balasan Admin Frayn
+            setTimeout(() => {
+                let replyText = "Terima kasih sudah menghubungi Frayn! Pesan Anda telah diterima. Silakan tinggalkan pertanyaan Anda secara detail.";
+                
+                const lowerMsg = message.toLowerCase();
+                if (lowerMsg.includes('coding') || lowerMsg.includes('tanya')) {
+                    replyText = "Tentu! Silakan tuliskan bahasa pemrograman atau kendala coding yang sedang kamu hadapi (HTML, JS, CSS, dll).";
+                } else if (lowerMsg.includes('wa') || lowerMsg.includes('whatsapp')) {
+                    replyText = "Kamu bisa menghubungkannya langsung ke WA di 62895405376599 atau klik tautan WA di halaman utama!";
+                }
+
+                const adminMsgHtml = `
+                    <div class="flex items-start gap-2">
+                        <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            F
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-2.5 rounded-2xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm max-w-[80%] text-slate-700 dark:text-slate-200">
+                            ${replyText}
+                        </div>
+                    </div>
+                `;
+                chatContainer.insertAdjacentHTML('beforeend', adminMsgHtml);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 800);
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        // View Navigation Logic (Dashboard vs Tentang Saya)
+        function showDashboard() {
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('profileView').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showProfileView() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('profileView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark / Light Theme Toggle Setup
+        function initTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        }
+        initTheme();
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            showToast(isDark ? 'Mode Gelap diaktifkan' : 'Mode Terang diaktifkan', 'fa-moon');
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-brand-600', 'text-brand-600', 'dark:text-brand-400');
+                btn.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+            });
+
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+            activeBtn.classList.add('border-brand-600', 'text-brand-600', 'dark:text-brand-400');
+        }
+
+        // ===== GALERI FOTO =====
+        // Taruh foto di folder yang sama dengan index.html, dengan nama: galeri1.jpeg, galeri2.jpeg, ... galeri19.jpeg
+        const GALLERY_TOTAL = 19;
+        const GALLERY_EXT = ['jpeg', 'jpg', 'png', 'webp'];
+        let galleryPhotos = [];   // { n, src } hanya foto yang ditemukan
+        let galleryIndex = 0;
+
+        function findGalleryPhoto(n) {
+            return new Promise(resolve => {
+                let i = 0;
+                const tryNext = () => {
+                    if (i >= GALLERY_EXT.length) return resolve(null);
+                    const src = `galeri${n}.${GALLERY_EXT[i++]}`;
+                    const img = new Image();
+                    img.onload = () => resolve({ n, src });
+                    img.onerror = tryNext;
+                    img.src = src;
+                };
+                tryNext();
+            });
+        }
+
+        async function initGallery() {
+            const results = await Promise.all(Array.from({ length: GALLERY_TOTAL }, (_, i) => findGalleryPhoto(i + 1)));
+            galleryPhotos = results.filter(Boolean);
+            const box = document.getElementById('galleryNumbers');
+            if (galleryPhotos.length === 0) {
+                document.getElementById('galleryEmpty').classList.remove('hidden');
+                document.getElementById('galleryMain').parentElement.classList.add('hidden');
+                return;
+            }
+            box.innerHTML = galleryPhotos.map((p, idx) =>
+                `<button onclick="showGalleryPhoto(${idx})" id="gnum-${idx}" class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/70 text-sm font-semibold hover:bg-brand-600 hover:text-white transition-all">${p.n}</button>`
+            ).join('');
+            showGalleryPhoto(0);
+        }
+
+        function showGalleryPhoto(idx) {
+            if (!galleryPhotos.length) return;
+            galleryIndex = (idx + galleryPhotos.length) % galleryPhotos.length;
+            document.getElementById('galleryMain').src = galleryPhotos[galleryIndex].src;
+            document.getElementById('galleryCounter').textContent = `${galleryPhotos[galleryIndex].n} / ${GALLERY_TOTAL}`;
+            galleryPhotos.forEach((_, i) => {
+                const b = document.getElementById(`gnum-${i}`);
+                const on = i === galleryIndex;
+                b.classList.toggle('bg-brand-600', on);
+                b.classList.toggle('text-white', on);
+                b.classList.toggle('border-brand-600', on);
+            });
+        }
+
+        function galleryStep(d) { showGalleryPhoto(galleryIndex + d); }
+
+        initGallery();
+
+        // Modal Edit Profile Toggle
+        function toggleEditModal() {
+            const modal = document.getElementById('editModal');
+            const isHidden = modal.classList.contains('hidden');
+
+            if (isHidden) {
+                document.getElementById('inputAvatar').value = document.getElementById('displayAvatar').src;
+                document.getElementById('inputName').value = document.getElementById('displayName').innerText;
+                document.getElementById('inputTitle').value = document.getElementById('displayTitle').innerText;
+                document.getElementById('inputBio').value = document.getElementById('displayBio').innerText;
+                document.getElementById('inputOrigin').value = document.getElementById('displayOrigin').innerText;
+                document.getElementById('inputEducation').value = document.getElementById('displayEducation').innerText;
+                document.getElementById('inputHobbies').value = document.getElementById('displayHobbies').innerText;
+                
+                const mailtoHref = document.getElementById('displayContactBtn').getAttribute('href');
+                document.getElementById('inputEmail').value = mailtoHref.replace('mailto:', '');
+
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Save Profile Logic
+        function saveProfile(e) {
+            e.preventDefault();
+
+            const avatarUrl = document.getElementById('inputAvatar').value;
+            const name = document.getElementById('inputName').value;
+            const title = document.getElementById('inputTitle').value;
+            const bio = document.getElementById('inputBio').value;
+            const origin = document.getElementById('inputOrigin').value;
+            const education = document.getElementById('inputEducation').value;
+            const hobbies = document.getElementById('inputHobbies').value;
+            const email = document.getElementById('inputEmail').value;
+
+            if (avatarUrl.trim() !== '') document.getElementById('displayAvatar').src = avatarUrl;
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('displayTitle').innerText = title;
+            document.getElementById('displayBio').innerText = bio;
+            document.getElementById('displayOrigin').innerText = origin;
+            document.getElementById('displayEducation').innerText = education;
+            document.getElementById('displayHobbies').innerText = hobbies;
+            document.getElementById('displayContactBtn').setAttribute('href', `mailto:${email}`);
+
+            toggleEditModal();
+            showToast('Profil berhasil diperbarui!', 'fa-check-circle');
+        }
+
+        // Copy Share Link to Clipboard
+        function copyShareLink() {
+            const tempInput = document.createElement('input');
+            tempInput.value = window.location.href;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('Tautan profil telah disalin!', 'fa-share-alt');
+            } catch (err) {
+                showToast('Gagal menyalin tautan.', 'fa-exclamation-circle');
+            }
+            
+            document.body.removeChild(tempInput);
+        }
+
+        // Custom Toast Notification System
+        function showToast(message, iconClass = 'fa-info-circle') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMessage.innerText = message;
+            toastIcon.className = `fas ${iconClass} text-brand-500`;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
